@@ -1,0 +1,29 @@
+{
+  "name": "cue",
+  "version": "1.0.0",
+  "description": "A lite version for vue",
+  "main": "index.js",
+  "scripts": {
+    "dev": "parcel -p 8080 watch index.html",
+    "build": "parcel build ./src/cue.js",
+    "precommit": "standard --fix"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/PeterChen1997/Cue.git"
+  },
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/PeterChen1997/Cue/issues"
+  },
+  "homepage": "https://github.com/PeterChen1997/Cue#readme",
+  "devDependencies": {
+    "babel-core": "^6.26.3",
+    "parcel-bundler": "^1.10.1",
+    "standard": "^12.0.1"
+  },
+  "dependencies": {
+    "babel-preset-env": "^1.7.0"
+  }
+}
