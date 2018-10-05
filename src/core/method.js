@@ -26,5 +26,8 @@ export function methodMixin (Cue) {
     }
 
     updateComponent.call(this)
+
+    this._isMounted = true
+    callHook(this, 'mounted')
   }
 }

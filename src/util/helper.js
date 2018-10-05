@@ -1,3 +1,5 @@
+import { createTextVNode } from '../vdom/vnode'
+
 export function callHook (cueInstance, lifeHook) {
   console.log(cueInstance, lifeHook)
 }
@@ -8,6 +10,9 @@ export function query (element) {
 }
 
 export function normalizeChildren (children) {
+  if (typeof children === 'string') {
+    children = [createTextVNode(children)]
+  }
   return children
 }
 

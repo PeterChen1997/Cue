@@ -7,13 +7,14 @@ export function createElement (
   data,
   children
 ) {
-  console.log(arguments)
   children = normalizeChildren(children)
 
   let vnode
   if (isReservedTag(tag)) {
-    vnode = new VNode()
+    vnode = new VNode(
+      tag, data, children,
+      undefined, undefined, context
+    )
   }
-
   return vnode
 }

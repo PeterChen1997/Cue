@@ -1,6 +1,5 @@
-import { mark, measure } from '../util/perf'
 import { createElement } from '../render'
-import { callHook, query } from '../util/helper'
+import { callHook } from '../util/helper'
 import { createPatchFunction } from '../vdom/patch'
 
 export function initMixin (Cue) {
@@ -26,8 +25,8 @@ export function initMixin (Cue) {
   }
 
   Cue.prototype._update = function (vnode) {
-    this.$el = this.__patch__(this.$el, vnode, false)
+    this.$element = this.__patch__(this.$element, vnode, false)
   }
 
-  Cue.prototype.__patch__ = createPatchFunction
+  Cue.prototype.__patch__ = createPatchFunction()
 }

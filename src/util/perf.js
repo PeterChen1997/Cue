@@ -5,13 +5,13 @@ export function mark (tag) {
 }
 
 export function measure (name, startTag, endTag) {
-    perf.measure(name, startTag, endTag);
+  perf.measure(name, startTag, endTag)
 
-    var measures = perf.getEntriesByName(name);
-    var measure = measures[0];
-    console.log(name, 'costs', measure.duration)
+  var measures = perf.getEntriesByName(name)
+  var measure = measures[0]
+  console.log(name, 'costs', measure.duration)
 
-    perf.clearMarks(startTag);
-    perf.clearMarks(endTag);
-    perf.clearMeasures(name);
+  perf.clearMarks(startTag)
+  perf.clearMarks(endTag)
+  perf.clearMeasures(name)
 }

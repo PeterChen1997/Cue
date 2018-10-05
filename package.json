@@ -6,7 +6,7 @@
   "scripts": {
     "dev": "parcel -p 8080 watch index.html",
     "build": "parcel build ./src/cue.js",
-    "precommit": "standard --fix"
+    "lint": "standard --fix"
   },
   "repository": {
     "type": "git",
@@ -20,10 +20,16 @@
   "homepage": "https://github.com/PeterChen1997/Cue#readme",
   "devDependencies": {
     "babel-core": "^6.26.3",
+    "cz-conventional-changelog": "^2.1.0",
     "parcel-bundler": "^1.10.1",
     "standard": "^12.0.1"
   },
   "dependencies": {
     "babel-preset-env": "^1.7.0"
+  },
+  "config": {
+    "commitizen": {
+      "path": "./node_modules/cz-conventional-changelog"
+    }
   }
 }

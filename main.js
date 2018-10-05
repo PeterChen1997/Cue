@@ -8,10 +8,18 @@ new Cue({ // eslint-disable-line
       'div',
       {
         attrs: {
-          id: 'foo'
+          id: 'foo212',
+          'data-test': 'nice'
         }
       },
-      'nice'
+      'nice13224'
     )
   }
 })
+
+// something for parcel
+if (module.hot) {
+  module.hot.dispose(() => {
+    window.location.reload()
+  })
+}
