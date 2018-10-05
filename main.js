@@ -2,7 +2,16 @@ import Cue from './src/cue'
 
 new Cue({ // eslint-disable-line
   querySelector: '.app',
-  template: `
-        <span>Hello World</span>
-    `
+  name: 'root',
+  render: function (h) {
+    return h(
+      'div',
+      {
+        attrs: {
+          id: 'foo'
+        }
+      },
+      'nice'
+    )
+  }
 })

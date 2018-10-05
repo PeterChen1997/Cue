@@ -1,4 +1,5 @@
-// import { initMixin } from './core/init.js'
+import { initMixin } from './core/init'
+import { methodMixin } from './core/method'
 
 class Cue {
   constructor (options) {
@@ -8,22 +9,7 @@ class Cue {
   }
 }
 
-Cue.prototype.$mount = function (element) {
-  console.log('$mount', this)
-
-  document.querySelector(element).innerHTML = this.$options.template
-}
-
-Cue.prototype._init = function (options) {
-  console.log('_init', this)
-
-  const cueInstance = this
-
-  cueInstance.$options = Object.assign({}, options)
-
-  cueInstance.$mount(cueInstance.$options.querySelector)
-}
-
-// initMixin(Cue)
+initMixin(Cue)
+methodMixin(Cue)
 
 export default Cue
