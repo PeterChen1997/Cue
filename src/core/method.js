@@ -9,6 +9,7 @@ export function methodMixin (Cue) {
 
     callHook(this, 'beforeMount')
 
+    this._self = this
     let updateComponent = function () {
       let name = this.name
       let startTag = 'cue-perf-start:' + name
