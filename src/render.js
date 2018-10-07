@@ -7,6 +7,12 @@ export function createElement (
   data,
   children
 ) {
+  // data为字符串，调整处理方式
+  if (typeof data !== 'function' && typeof data !== 'object') {
+    children = data
+    data = undefined
+  }
+
   children = normalizeChildren(children)
 
   let vnode
