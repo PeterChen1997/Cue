@@ -1,4 +1,5 @@
 import VNode, { emptyNodeAt } from '../vdom/vnode'
+import { updateAttrs, updateDOMListeners } from '../update/index'
 
 function createElm (
   vnode,
@@ -46,21 +47,15 @@ function createComponent (vnode, insertedVnodeQueue, parentElm, refElm) {
 }
 
 function invokeCreateHooks (vnode, insertedVnodeQueue) {
-  updateAttrs(new VNode(), vnode)
+  let emptyNode = new VNode()
+  updateAttrs(emptyNode, vnode)
+  updateDOMListeners(emptyNode, vnode)
 }
 
 function removeVnodes (parentElm, vnodes, startIdx, endIdx) {
   parentElm.removeChild(vnodes[0].elm)
 }
 
-function updateAttrs (oldVnode, vnode) {
-  // const oldAttrs = oldVnode.data.attrs || {}
-  const attrs = vnode.data.attrs || {}
-
-  for (let key in attrs) {
-    vnode.elm.setAttribute(key, attrs[key])
-  }
-}
 
 export function createPatchFunction (oldVnode, vnode, removeOnly) {
   return function patch (oldVnode, vnode, removeOnly) {

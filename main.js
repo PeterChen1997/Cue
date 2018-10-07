@@ -3,8 +3,13 @@ import Cue from './src/cue'
 new Cue({ // eslint-disable-line
   querySelector: '.app',
   name: 'root',
+  data() {
+    return {
+      clickCount: 0
+    }
+  },
   methods: {
-    clickHandler() { console.log('clicked') }
+    clickHandler: function (num) { console.log('clicked' + num) }
   },
   render: function (h) {
     return h(
@@ -20,22 +25,29 @@ new Cue({ // eslint-disable-line
           'button',
           {
             attrs: {
-              id: 'bar'
+              class: 'bar'
             },
             on: {
-              click: this.clickHandler
+              click: () => this.clickHandler(1)
             }
           },
-          'click me!'
+          '+'
+        ),
+        h(
+          'button',
+          {
+            attrs: {
+              class: 'bar'
+            },
+            on: {
+              click: () => this.clickHandler(-1)
+            }
+          },
+          '-'
         ),
         h(
           'span',
-          {
-            attrs: {
-              id: 'bar2'
-            }
-          },
-          'please click the btn'
+          'total click count:' + this.clickCount
         )
       ]
     )

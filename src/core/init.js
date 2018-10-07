@@ -1,6 +1,7 @@
 import { createElement } from '../render'
 import { callHook } from '../util/helper'
 import { createPatchFunction } from '../vdom/patch'
+import { initState } from '../instance/state'
 
 export function initMixin (Cue) {
   Cue.prototype._init = function (options) {
@@ -12,7 +13,7 @@ export function initMixin (Cue) {
     cueInstance.$createElement = (a, b, c) => createElement(cueInstance, a, b, c)
 
     callHook(cueInstance, 'beforeCreate')
-
+    initState(cueInstance)
     callHook(cueInstance, 'created')
 
     cueInstance.$mount(cueInstance.$options.querySelector)
