@@ -20,3 +20,16 @@ export function isReservedTag (tag) {
   // TODO: isHTMLTag(tag) || isSVG(tag)
   return true
 }
+
+export function def (obj, key, val, enumerable) {
+  Object.defineProperty(obj, key, {
+    value: val,
+    enumerable: !!enumerable,
+    writable: true,
+    configurable: true
+  })
+}
+
+export function hasOwn (obj, property) {
+  return Object.prototype.hasOwnProperty.call(obj, property)
+}

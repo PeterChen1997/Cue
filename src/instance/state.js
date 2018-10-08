@@ -1,4 +1,5 @@
 import { noop } from '../util/index'
+import { observe } from '../observer/index'
 
 const sharedPropertyDefinition = {
     enumerable: true,
@@ -52,5 +53,5 @@ function initData(cueInstance) {
         proxy(cueInstance, '_data', keys[i])
     }
     // observe data
-    // observe(data, true /* root data */)
+    observe(data, true /* root data */)
 }

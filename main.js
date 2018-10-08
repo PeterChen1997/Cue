@@ -9,11 +9,13 @@ new Cue({ // eslint-disable-line
     }
   },
   methods: {
-    clickHandler: function (num) { console.log('clicked' + num) }
+    clickHandler: function (num) {
+      this.clickCount += num
+      console.log('clicked' + this.clickCount)
+    }
   },
   render: function (h) {
-    return h(
-      'div',
+    return h('div',
       {
         attrs: {
           id: 'foo',
@@ -21,8 +23,7 @@ new Cue({ // eslint-disable-line
         }
       },
       [
-        h(
-          'button',
+        h('button',
           {
             attrs: {
               class: 'bar'
@@ -33,8 +34,7 @@ new Cue({ // eslint-disable-line
           },
           '+'
         ),
-        h(
-          'button',
+        h('button',
           {
             attrs: {
               class: 'bar'
@@ -45,8 +45,7 @@ new Cue({ // eslint-disable-line
           },
           '-'
         ),
-        h(
-          'span',
+        h('span',
           'total click count:' + this.clickCount
         )
       ]
