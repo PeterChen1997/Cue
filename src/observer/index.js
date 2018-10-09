@@ -57,6 +57,9 @@ export function defineReactive (
         enumerable: true,
         configurable: true,
         get: function reactiveGetter () {
+            if (Dep.target) {
+                dep.depend()
+            }
             return val
         },
         set: function reactiveSetter (newValue) {

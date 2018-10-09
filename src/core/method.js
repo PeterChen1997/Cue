@@ -1,5 +1,7 @@
 import { mark, measure } from '../util/perf'
 import { callHook, query } from '../util/helper'
+import { noop } from '../util/index'
+import Watcher from '../observer/watcher'
 
 export function methodMixin (Cue) {
   Cue.prototype.$mount = function (element) {
@@ -26,9 +28,11 @@ export function methodMixin (Cue) {
       measure(('cue ' + name + ' patch'), startTag, endTag)
     }
 
-    updateComponent.call(this)
+    new Watcher(this, updateComponent, noop, null, true /* isRenderWatcher */)
+    // updateComponent.call(this)
 
     this._isMounted = true
     callHook(this, 'mounted')
+    return this
   }
 }
