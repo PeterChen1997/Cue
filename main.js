@@ -3,7 +3,7 @@ import Cue from './src/cue'
 new Cue({ // eslint-disable-line
   querySelector: '.app',
   name: 'root',
-  data() {
+  data () {
     return {
       clickCount: 0
     }

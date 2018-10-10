@@ -28,7 +28,7 @@ export function methodMixin (Cue) {
       measure(('cue ' + name + ' patch'), startTag, endTag)
     }
 
-    new Watcher(this, updateComponent, noop, null, true /* isRenderWatcher */)
+    new Watcher(this, updateComponent, noop, null, true /* isRenderWatcher */) // eslint-disable-line
     // updateComponent.call(this)
 
     this._isMounted = true

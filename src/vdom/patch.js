@@ -56,7 +56,6 @@ function removeVnodes (parentElm, vnodes, startIdx, endIdx) {
   parentElm.removeChild(vnodes[0].elm)
 }
 
-
 export function createPatchFunction (oldVnode, vnode, removeOnly) {
   return function patch (oldVnode, vnode, removeOnly) {
     // let isRealElement = Boolean(oldVnode.nodeType)
