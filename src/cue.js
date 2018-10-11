@@ -1,5 +1,6 @@
 import { initMixin } from './core/init'
 import { methodMixin } from './core/method'
+import { initGlobalAPI } from './core/assets'
 
 class Cue {
   constructor (options) {
@@ -11,5 +12,7 @@ class Cue {
 
 initMixin(Cue)
 methodMixin(Cue)
+
+initGlobalAPI(Cue)
 
 export default Cue
