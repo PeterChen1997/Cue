@@ -21,3 +21,7 @@ A lite version for vue
 - attrs
 - on
 - data
+
+## 文档
+
+https://peterchen1997.github.io/Cue/

@@ -27,11 +27,11 @@ module.exports = {
         ],
         sidebar: [
             {
-                title: 'vue',
+                title: '框架思路',
                 collapsable: false,
                 children: [
                     'note/1-Vue介绍.md',
-                    'note/2-render.md'
+                    'note/2-响应式.md'
                 ]
             }
         ]
