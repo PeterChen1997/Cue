@@ -31,7 +31,8 @@ module.exports = {
                 collapsable: false,
                 children: [
                     'note/1-Vue介绍.md',
-                    'note/2-响应式.md'
+                    'note/2-响应式原理介绍.md',
+                    'note/3-响应式原理实现.md'
                 ]
             }
         ]
