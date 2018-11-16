@@ -32,7 +32,9 @@ module.exports = {
                 children: [
                     'note/1-Vue介绍.md',
                     'note/2-响应式原理介绍.md',
-                    'note/3-响应式原理实现.md'
+                    'note/3-响应式原理实现.md',
+                    'note/4-Vue渲染流程介绍.md',
+                    'note/5-组件化原理介绍.md'
                 ]
             }
         ]
