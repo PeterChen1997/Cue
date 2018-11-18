@@ -1,5 +1,6 @@
 import { mergeOptions } from '../util/options'
 import { proxy } from '../instance/state'
+import { extend } from '../util/index'
 
 function initProps (Comp) {
     const { props } = Comp.options
@@ -16,7 +17,6 @@ export function initExtend(Cue) {
 
     Cue.extend = function (extendOptions) {
         const Super = this
-        const SuperId = Super.id
 
         const name = extendOptions.name
 
@@ -26,8 +26,7 @@ export function initExtend(Cue) {
 
         Sub.prototype = Object.create(Super.prototype)
         Sub.prototype.constructor = Sub
-        
-        Super.cid = cid++
+        Sub.cid = cid++
         Sub.options = mergeOptions(
             Super.options,
             extendOptions

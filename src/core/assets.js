@@ -12,5 +12,7 @@ export function initGlobalAPI(Cue) {
             definition.name = definition.name || id
             definition = this.options._base.extend(definition)
         }
+        this.options['components'][id] = definition
+        return definition
     }
 }

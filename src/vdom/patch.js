@@ -1,5 +1,6 @@
 import VNode, { emptyNodeAt } from '../vdom/vnode'
 import { updateAttrs, updateDOMListeners } from '../update/index'
+import { isDef } from '../util';
 
 function createElm (
   vnode,
@@ -43,6 +44,11 @@ function createChildren (vnode, children, insertedVnodeQueue) {
 }
 
 function createComponent (vnode, insertedVnodeQueue, parentElm, refElm) {
+  let i = vnode.data
+  if (isDef(i)) {
+    // TODO: Next
+  }
+
   return false
 }
 
