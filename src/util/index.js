@@ -18,12 +18,13 @@ export function isUndef(v) {
     return v === undefined || v === null
 }
 
-export function resolveAssets(
+export function resolveAsset(
     options,
     type,
     id,
     warnMissing
 ) {
+
     if (typeof id !== 'string') {
         return
     }
@@ -59,4 +60,12 @@ export const camelize = str => {
  */
 export const capitalize = str => {
   return str.charAt(0).toUpperCase() + str.slice(1)
+}
+
+/**
+ * Strict object type check. Only returns true
+ * for plain JavaScript objects.
+ */
+export function isPlainObject (obj) {
+    return Object.prototype.toString.call(obj) === '[object Object]'
 }

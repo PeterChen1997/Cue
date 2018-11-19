@@ -7,8 +7,6 @@ function initProps (Comp) {
     for (const key in props) {
         proxy(Comp.prototype, '_props', key)
     }
-
-
 }
 
 export function initExtend(Cue) {

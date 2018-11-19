@@ -5,7 +5,8 @@ class VNode {
     children,
     text,
     elm,
-    context
+    context,
+    componentOptions
   ) {
     this.tag = tag
     this.data = data
@@ -14,6 +15,7 @@ class VNode {
     this.tag = tag
     this.elm = elm
     this.context = context
+    this.componentOptions = componentOptions
   }
 }
 

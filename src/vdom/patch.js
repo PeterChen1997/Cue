@@ -46,7 +46,9 @@ function createChildren (vnode, children, insertedVnodeQueue) {
 function createComponent (vnode, insertedVnodeQueue, parentElm, refElm) {
   let i = vnode.data
   if (isDef(i)) {
-    // TODO: Next
+    if (isDef(i = i.hook) && isDef(i = i.init)) {
+      i(vnode, false)
+    }
   }
 
   return false

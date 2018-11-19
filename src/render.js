@@ -1,10 +1,15 @@
 import { normalizeChildren, isReservedTag } from './util/helper'
 import VNode from './vdom/vnode'
-import { isDef, isUndef, resolveAssets } from './util/index'
+import { isDef, isUndef, resolveAsset } from './util/index'
+import { activeInstance } from './core/init'
 
 const componentVNodeHooks = {
   init(vnode) {
-    
+    const child = vnode.componentInstance = createComponentInstanceForVnode(
+      vnode,
+      activeInstance
+    )
+
   },
 
   prepatch(oldVnode, vnode) {
@@ -42,7 +47,7 @@ export function createElement (
       tag, data, children,
       undefined, undefined, context
     )
-  } else if (isDef(Ctor = resolveAssets(context.$options, 'components', tag))) {
+  } else if (isDef(Ctor = resolveAsset(context.$options, 'components', tag))) {
     vnode = createComponent(Ctor, data, context, children, tag)
   }
   return vnode
@@ -81,5 +86,32 @@ function createComponent (
 
 function installComponentHooks (data) {
   const hooks = data.hook || (data.hook = {})
-  // TODO: Next
+  for (let i = 0; i < hooksToMerge.length; i++) {
+    const key = hooksToMerge[i]
+    const existing = hooks[key]
+    const toMerge = componentVNodeHooks[key]
+
+    if (existing !== toMerge && !(existing && existing._merged)) {
+      hooks[key] = existing ? mergeHooks(toMerge, existing) : toMerge
+    }
+  }
+}
+
+function mergeHooks (f1, f2) {
+  const merged = (a, b) => {
+    f1(a, b),
+    f2(a, b)
+  }
+  merged._merged = true
+  return merged
+}
+
+export function createComponentInstanceForVnode (vnode, parent) {
+  const options = {
+    _isComponent: true,
+    _parentVnode: vnode,
+    parent
+  }
+
+  return new vnode.componentOptions.Ctor(options)
 }

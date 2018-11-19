@@ -1,6 +1,6 @@
 import config from '../config.js'
 import { hasOwn } from '../util/helper'
-import { extend } from './index.js';
+import { extend, camelize } from './index.js';
 
 const ASSET_TYPES = [
     'component',
@@ -34,6 +34,9 @@ ASSET_TYPES.forEach(function (type) {
 })
 
 export function mergeOptions (parent, child, cueInstance) {
+
+    normalizeProps(child, cueInstance)
+    
     let options = {}
 
     for (let key in parent) {
@@ -52,3 +55,33 @@ export function mergeOptions (parent, child, cueInstance) {
 
     return options
 }
+
+function normalizeProps (options) {
+    const { props } = options
+    if (!props) return
+    
+    const res = {}
+    let i, val, name
+    if (Array.isArray(props)) {
+        i = props.length
+        while (i--) {
+            val = props[i]
+            if (typeof val === 'string') {
+                name = camelize(val)
+                res[name] = { type: null }
+            } else {
+                console.warn('props must be strings when using array syntax.')
+            }
+        }
+    } else if (isPlainObject(props)) {
+        for (const key in props) {
+            val = props[key]
+            name = camelize(key)
+            res[name] = isPlainObject(val)
+                ? val
+                : { type: val }
+        }
+    }
+    options.props = res
+}
+

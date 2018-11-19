@@ -30,7 +30,20 @@ export function proxy (target, sourceKey, key) {
   Object.defineProperty(target, key, sharedPropertyDefinition)
 }
 
-function initProps () {}
+function initProps (cueInstance, propsOptions) {
+  const propsData = cueInstance.$options.propsData || {}
+  const props = cueInstance._props = {}
+
+  const keys = cueInstance.$options._propsKeys = []
+  const isRoot = !cueInstance.$parent
+
+  for (const key in propsData) {
+    keys.push(key)
+    const value = validateVal
+
+    // TODO: next
+  }
+}
 function initWatch () {}
 function initComputed () {}
 

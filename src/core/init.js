@@ -5,6 +5,8 @@ import { createPatchFunction } from '../vdom/patch'
 import { initState } from '../instance/state'
 
 let uid = 0
+export let activeInstance = null
+
 export function initMixin (Cue) {
   Cue.prototype._init = function (options) {
     const cueInstance = this
@@ -13,7 +15,7 @@ export function initMixin (Cue) {
     cueInstance._isVue = true
     // merge options
     if (options && options._isComponent) {
-      // initInternalComponent(cueInstance, options)
+      initInternalComponent(cueInstance, options)
     } else {
       cueInstance.$options = mergeOptions(
         resolveConstructorOptions(cueInstance.constructor),
@@ -40,7 +42,12 @@ export function initMixin (Cue) {
   }
 
   Cue.prototype._update = function (vnode) {
+    let preActiveInstance = activeInstance
+    activeInstance = this
+    
     this.$element = this.__patch__(this.$element, vnode, false)
+
+    activeInstance = preActiveInstance
   }
 
   Cue.prototype.__patch__ = createPatchFunction()
@@ -61,4 +68,19 @@ export function resolveConstructorOptions (Ctor) {
     }
   }
   return options
+}
+
+export function initInternalComponent (cueInstance, options) {
+  const opts = cueInstance.$options = Object.create(cueInstance.constructor.options)
+  const parentVnode = options._parentVnode
+  opts.parent = options.parent
+  opts._parentVnode = parentVnode
+
+  const vnodeComponentOptions = parentVnode.componentOptions
+  opts.propsData = vnodeComponentOptions.propsData
+  opts._parentListeners = vnodeComponentOptions.listeners
+  opts._renderChildren = vnodeComponentOptions.children
+  opts._componentTag = vnodeComponentOptions.tag
+
+  // options.render
 }
