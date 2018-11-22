@@ -4,23 +4,24 @@ import { isDef, isUndef, resolveAsset } from './util/index'
 import { activeInstance } from './core/init'
 
 const componentVNodeHooks = {
-  init(vnode) {
+  init (vnode) {
     const child = vnode.componentInstance = createComponentInstanceForVnode(
       vnode,
       activeInstance
     )
 
+    child.$mount(undefined)
   },
 
-  prepatch(oldVnode, vnode) {
-
-  },
-
-  insert(vnode) {
+  prepatch (oldVnode, vnode) {
 
   },
 
-  destory(vnode) {
+  insert (vnode) {
+
+  },
+
+  destory (vnode) {
 
   }
 }
@@ -68,7 +69,7 @@ function createComponent (
 
   let asyncFactory = undefined
 
-  let propsData = Ctor.options.props
+  let propsData = Object.assign({}, data.props)
 
   // install component management hooks onto the placeholder node
   installComponentHooks(data)

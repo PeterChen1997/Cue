@@ -74,3 +74,13 @@ export function defineReactive (
     }
   })
 }
+
+/**
+ * In some cases we may want to disable observation inside a component's
+ * update computation.
+ */
+export let shouldObserve = true
+
+export function toggleObserving (value) {
+  shouldObserve = value
+}

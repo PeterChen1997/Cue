@@ -1,5 +1,5 @@
 import { noop } from '../util/index'
-import { observe } from '../observer/index'
+import { observe, toggleObserving, defineReactive } from '../observer/index'
 
 const sharedPropertyDefinition = {
   enumerable: true,
@@ -37,12 +37,22 @@ function initProps (cueInstance, propsOptions) {
   const keys = cueInstance.$options._propsKeys = []
   const isRoot = !cueInstance.$parent
 
-  for (const key in propsData) {
-    keys.push(key)
-    const value = validateVal
-
-    // TODO: next
+  // root instance props should be converted
+  if (!isRoot) {
+    toggleObserving(false)
   }
+
+  for (const key in propsOptions) {
+    keys.push(key)
+    const value = propsData[key]
+
+    defineReactive(props, key, value)
+
+    if (!(key in cueInstance)) {
+      proxy(cueInstance, `_props`, key)
+    }
+  }
+  toggleObserving(true)
 }
 function initWatch () {}
 function initComputed () {}

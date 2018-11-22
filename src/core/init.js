@@ -32,7 +32,9 @@ export function initMixin (Cue) {
     initState(cueInstance)
     callHook(cueInstance, 'created')
 
-    cueInstance.$mount(cueInstance.$options.querySelector)
+    if (cueInstance.$options.querySelector) {
+      cueInstance.$mount(cueInstance.$options.querySelector)
+    }
   }
 
   Cue.prototype._render = function () {
@@ -44,6 +46,7 @@ export function initMixin (Cue) {
   Cue.prototype._update = function (vnode) {
     let preActiveInstance = activeInstance
     activeInstance = this
+    this._vnode = vnode
     
     this.$element = this.__patch__(this.$element, vnode, false)
 
