@@ -23,6 +23,8 @@ export const isSVG = makeMap(
   true
 )
 
+export const isTextInputType = makeMap('text,number,password,search,email.tel,url')
+
 export function makeMap (
   str,
   expectsLowerCase

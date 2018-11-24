@@ -47,7 +47,7 @@ export function initMixin (Cue) {
     let preActiveInstance = activeInstance
     activeInstance = this
     this._vnode = vnode
-    
+
     this.$element = this.__patch__(this.$element, vnode, false)
 
     activeInstance = preActiveInstance

@@ -14,7 +14,15 @@ const componentVNodeHooks = {
   },
 
   prepatch (oldVnode, vnode) {
-
+    const options = vnode.componentOptions
+    const child = vnode.componentInstance = oldVnode.componentInstance
+    updateChildComponent(
+      child,
+      options.propsData,
+      options.listeners,
+      vnode,
+      options.children
+    )
   },
 
   insert (vnode) {
@@ -67,7 +75,7 @@ function createComponent (
 
   let bastCtor = context.$options._base
 
-  let asyncFactory = undefined
+  let asyncFactory
 
   let propsData = Object.assign({}, data.props)
 
@@ -76,7 +84,7 @@ function createComponent (
 
   let name = Ctor.options.name || tag
   let vnode = new VNode(
-    ('cue-component-' + (Ctor.cid) + (name ? ("-" + name) : '')),
+    ('cue-component-' + (Ctor.cid) + (name ? ('-' + name) : '')),
     data, undefined, undefined, undefined, context,
     { Ctor, propsData, listeners: undefined, tag, children },
     asyncFactory
