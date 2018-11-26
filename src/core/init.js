@@ -45,10 +45,16 @@ export function initMixin (Cue) {
 
   Cue.prototype._update = function (vnode) {
     let preActiveInstance = activeInstance
+    const preVnode = this._vnode
+
     activeInstance = this
     this._vnode = vnode
 
-    this.$element = this.__patch__(this.$element, vnode, false)
+    if (!preVnode) {
+      this.$element = this.__patch__(this.$element, vnode, false)
+    } else {
+      this.$element = this.__patch__(preVnode, vnode)
+    }
 
     activeInstance = preActiveInstance
   }

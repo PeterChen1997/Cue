@@ -14,6 +14,7 @@ class VNode {
     this.text = text
     this.tag = tag
     this.elm = elm
+    this.key = data && data.key
     this.context = context
     this.componentOptions = componentOptions
   }

@@ -71,3 +71,5 @@ export function def (obj, key, val, enumerable) {
 export function hasOwn (obj, property) {
   return Object.prototype.hasOwnProperty.call(obj, property)
 }
+
+export const hasProto = '__proto__' in {}

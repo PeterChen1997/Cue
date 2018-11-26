@@ -3,7 +3,7 @@ import { updateAttrs, updateDOMListeners } from '../update/index'
 import { isDef, isUndef } from '../util'
 import { isTextInputType } from '../util/helper'
 
-function createElm (
+function createElm(
   vnode,
   insertedVnodeQueue,
   parentElm,
@@ -32,7 +32,7 @@ function createElm (
   insert(parentElm, vnode.elm, refElm)
 }
 
-function insert (parentElm, elm, refElm) {
+function insert(parentElm, elm, refElm) {
   if (parentElm) {
     if (refElm) {
       if (refElm.parentNode === parentElm) {
@@ -44,13 +44,13 @@ function insert (parentElm, elm, refElm) {
   }
 }
 
-function createChildren (vnode, children, insertedVnodeQueue) {
+function createChildren(vnode, children, insertedVnodeQueue) {
   for (let i = 0; i < children.length; i++) {
     createElm(children[i], insertedVnodeQueue, vnode.elm, null, true, children, i)
   }
 }
 
-function createComponent (vnode, insertedVnodeQueue, parentElm, refElm) {
+function createComponent(vnode, insertedVnodeQueue, parentElm, refElm) {
   let i = vnode.data
   if (isDef(i)) {
     if (isDef(i = i.hook) && isDef(i = i.init)) {
@@ -73,7 +73,7 @@ function createComponent (vnode, insertedVnodeQueue, parentElm, refElm) {
   return false
 }
 
-function initComponent (vnode, insertedVnodeQueue) {
+function initComponent(vnode, insertedVnodeQueue) {
   vnode.elm = vnode.componentInstance.$element
 
   if (isPatchable(vnode)) {
@@ -81,24 +81,24 @@ function initComponent (vnode, insertedVnodeQueue) {
   }
 }
 
-function isPatchable (vnode) {
+function isPatchable(vnode) {
   while (vnode.componentInstance) {
     vnode = vnode.componentInstance._vnode
   }
   return isDef(vnode.tag)
 }
 
-function invokeCreateHooks (vnode, insertedVnodeQueue) {
+function invokeCreateHooks(vnode, insertedVnodeQueue) {
   let emptyNode = new VNode()
   updateAttrs(emptyNode, vnode)
   updateDOMListeners(emptyNode, vnode)
 }
 
-function removeVnodes (parentElm, vnodes, startIdx, endIdx) {
+function removeVnodes(parentElm, vnodes, startIdx, endIdx) {
   parentElm.removeChild(vnodes[0].elm)
 }
 
-function sameInputType (a, b) {
+function sameInputType(a, b) {
   if (a.tag !== 'input') return true
   let i
   const typeA = isDef(i = a.data) && isDef(i = i.attr) && i.type
@@ -107,7 +107,7 @@ function sameInputType (a, b) {
 }
 
 // only diff the same level node
-function sameVnode (a, b) {
+function sameVnode(a, b) {
   return (
     a.key === b.key && (
       a.tag === b.tag &&
@@ -118,7 +118,7 @@ function sameVnode (a, b) {
   )
 }
 
-function updateChildren (parentElm, oldVnode, vnode, insertedVnodeQueue) {
+function updateChildren(parentElm, oldCh, newCh, insertedVnodeQueue) {
   let oldStartIdx = 0
   let newStartIdx = 0
   let oldEndIdx = oldCh.length - 1
@@ -135,21 +135,36 @@ function updateChildren (parentElm, oldVnode, vnode, insertedVnodeQueue) {
     } else if (isUndef(oldEndVnode)) {
 
     } else if (sameVnode(oldStartVnode, newStartVnode)) { // 头头比较
-
+      patchVnode(oldStartVnode, newStartVnode, insertedVnodeQueue);
+      oldStartVnode = oldCh[++oldStartIdx];
+      newStartVnode = newCh[++newStartIdx];
     } else if (sameVnode(oldEndVnode, newEndVnode)) { // 尾尾比较
 
     } else if (sameVnode(oldStartVnode, newEndVnode)) { // 头尾比较
-
+      patchVnode(oldStartVnode, newEndVnode, insertedVnodeQueue)
+      parentElm.insertBefore(oldStartVnode.elm, oldEndVnode.elm.nextSibling)
+      oldStartVnode = oldCh[++oldStartIdx]
+      newEndVnode = newCh[--newEndIdx]
     } else if (sameVnode(oldEndVnode, newStartVnode)) { // 尾头比较
-
+      patchVnode(oldEndVnode, newStartVnode, insertedVnodeQueue);
+      parentElm.insertBefore(oldEndVnode.elm, oldStartVnode.elm)
+      oldEndVnode = oldCh[--oldEndIdx]
+      newStartVnode = newCh[++newStartIdx]
     } else {
 
     }
+
+  }
+  if (oldStartIdx > oldEndIdx) {
+    refElm = isUndef(newCh[newEndIdx + 1]) ? null : newCh[newEndIdx + 1].elm;
+    addVnodes(parentElm, refElm, newCh, newStartIdx, newEndIdx, insertedVnodeQueue);
+  } else if (newStartIdx > newEndIdx) {
+    removeVnodes(parentElm, oldCh, oldStartIdx, oldEndIdx);
   }
 }
 
-function patchVnode (oldVnode, vnode, insertedVnodeQueue) {
-  if (oldVnode === vode) {
+function patchVnode(oldVnode, vnode, insertedVnodeQueue) {
+  if (oldVnode === vnode) {
     return
   }
 
@@ -164,14 +179,16 @@ function patchVnode (oldVnode, vnode, insertedVnodeQueue) {
   // update
   const oldCh = oldVnode.children
   const ch = vnode.children
-  if (isDef(data) && isPatchable(vnode)) {
-    for (i = 0; i < cbs.update.length; ++i) cbs.update[i](oldVnode, vnode)
-    if (isDef(i = data.hook) && isDef(i = i.update)) i(oldVnode, vnode)
-  }
+  // TODO: ignore this part
+  // if (isDef(data) && isPatchable(vnode)) {
+  // for (i = 0; i < cbs.update.length; ++i) cbs.update[i](oldVnode, vnode)
+  // if (isDef(i = data.hook) && isDef(i = i.update)) i(oldVnode, vnode)
+  // }
+
   // doing patch
   if (isUndef(vnode.text)) {
     if (isDef(oldCh) && isDef(ch)) { // 更新子节点
-      if (oldCh !== ch) updateChildren(elm, oldVnode, vnode, insertedVnodeQueue)
+      if (oldCh !== ch) updateChildren(elm, oldCh, ch, insertedVnodeQueue)
     } else if (isDef(ch)) { // 旧节点为文本或为空
       if (isDef(oldVnode.text)) elm.textContent = ''
       // addVnodes(elm, null, ch, 0, ch.length - 1, insertedVnodeQueue)
@@ -187,8 +204,8 @@ function patchVnode (oldVnode, vnode, insertedVnodeQueue) {
   }
 }
 
-export function createPatchFunction (oldVnode, vnode, removeOnly) {
-  return function patch (oldVnode, vnode, removeOnly) {
+export function createPatchFunction(oldVnode, vnode, removeOnly) {
+  return function patch(oldVnode, vnode, removeOnly) {
     // let isRealElement = Boolean(oldVnode.nodeType)
 
     let isInitialPatch = false
@@ -229,7 +246,7 @@ export function createPatchFunction (oldVnode, vnode, removeOnly) {
   }
 }
 
-function invokeInsertHook (vnode, queue, initial) {
+function invokeInsertHook(vnode, queue, initial) {
   // delay insert hooks for component root nodes, invoke them after the
   // element is really inserted
   if (initial && isDef(vnode.parent)) {
@@ -238,5 +255,11 @@ function invokeInsertHook (vnode, queue, initial) {
     for (let i = 0; i < queue.length; ++i) {
       queue[i].data.hook.insert(queue[i])
     }
+  }
+}
+
+function addVnodes (parentElm, refElm, vnodes, startIdx, endIdx, insertedVnodeQueue) {
+  for (; startIdx <= endIdx; ++startIdx) {
+    createElm(vnodes[startIdx], insertedVnodeQueue, parentElm, refElm, false, vnodes, startIdx)
   }
 }
